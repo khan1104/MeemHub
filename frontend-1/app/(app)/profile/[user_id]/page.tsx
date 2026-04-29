@@ -165,6 +165,8 @@ export default function Profile() {
         : "border-transparent text-gray-500 hover:text-primary"
     }`;
 
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <div className="mx-auto flex max-w-360 gap-6 px-2 sm:px-5 pt-6">
       <div className="flex-1 flex flex-col">
@@ -173,7 +175,12 @@ export default function Profile() {
           {!user ? (
             <ProfileHeaderSkeleton />
           ) : (
-            <ProfileHeader user={user} isOwnProfile={isOwnProfile} />
+            <ProfileHeader
+              user={user}
+              isOwnProfile={isOwnProfile}
+              isExpanded={isExpanded}
+              setIsExpanded={setIsExpanded}
+            />
           )}
 
           <div className="mt-6 flex gap-4 border-b text-sm font-medium overflow-x-auto">
@@ -274,7 +281,11 @@ export default function Profile() {
         )}
 
         {activeTab === "friends" && user && !error && (
-          <Friends user_id={user.user_id} isOwnProfile={isOwnProfile} />
+          <Friends
+            user_id={user.user_id}
+            isOwnProfile={isOwnProfile}
+            isExpanded={isExpanded}
+          />
         )}
       </div>
     </div>

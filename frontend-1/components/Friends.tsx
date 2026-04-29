@@ -11,9 +11,10 @@ import { useFriends } from "@/hooks/friends";
 interface FriendProps {
   user_id: string;
   isOwnProfile: boolean;
+  isExpanded: boolean;
 }
 
-function Friends({ user_id, isOwnProfile }: FriendProps) {
+function Friends({ user_id, isOwnProfile,isExpanded }: FriendProps) {
   const [activeTab, setActiveTab] = useState("Followers");
   const { isLoggedIn, isLoading: authLoading } = useUser();
 
@@ -227,7 +228,9 @@ function Friends({ user_id, isOwnProfile }: FriendProps) {
 
   return (
     <div className="grid grid-cols-1 gap-2 mt-5">
-      <div className="sticky sm:top-35 top-55 z-10 bg-white pb-2">
+      <div
+        className={`sticky ${isExpanded ? "top-87" : "top-52"} sm:top-35 z-10 bg-white pb-2`}
+      >
         <div className="flex overflow-x-auto scrollbar-hide gap-1">
           {[
             "Followers",

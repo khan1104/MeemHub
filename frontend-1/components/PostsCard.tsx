@@ -164,9 +164,84 @@ export default function PostCard({
     observer.observe(videoElement);
     return () => observer.disconnect();
   }, [post.media_type]);
+  const [showShare, setShowShare] = useState(false);
+  const shareUrl = `https://www.meemhub.in/posts/${post.post_id}`;
+const encodedUrl = encodeURIComponent(shareUrl);
+const encodedText = encodeURIComponent(post.caption);
+
+const shareLinks = {
+  whatsapp: `https://wa.me/?text=${encodedText}%20${encodedUrl}`,
+  telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}`,
+  twitter: `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`,
+};
+  const handleShare = async () => {
+  const url = `https://www.meemhub.in/posts/${post.post_id}`;
+  const text = post.caption;
+
+  // ✅ Mobile → native share first
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: "MeemHub",
+        text,
+        url,
+      });
+      return;
+    } catch {}
+  }
+
+  // ✅ Desktop → open options
+  setShowShare(true);
+};
   return (
     <div className="w-full bg-white border border-gray-200 rounded-xl mb-4 shadow-sm">
       {/* ================= HEADER ================= */}
+      {showShare && (
+  <div className="fixed inset-0 bg-black/40 flex items-end sm:items-center justify-center z-50">
+    <div className="bg-white w-full sm:w-80 rounded-t-2xl sm:rounded-2xl p-4">
+
+      <h3 className="font-semibold mb-3">Share</h3>
+
+      <div className="flex justify-around text-center">
+
+        <a href={shareLinks.whatsapp} target="_blank" rel="noopener noreferrer">
+          <div className="p-3 bg-green-100 rounded-xl">WA</div>
+          <p className="text-xs mt-1">WhatsApp</p>
+        </a>
+
+        <a href={shareLinks.telegram} target="_blank" rel="noopener noreferrer">
+          <div className="p-3 bg-sky-100 rounded-xl">TG</div>
+          <p className="text-xs mt-1">Telegram</p>
+        </a>
+
+        <a href={shareLinks.twitter} target="_blank" rel="noopener noreferrer">
+          <div className="p-3 bg-blue-100 rounded-xl">X</div>
+          <p className="text-xs mt-1">X</p>
+        </a>
+
+      </div>
+
+      {/* Copy */}
+      <button
+        onClick={() => {
+          navigator.clipboard.writeText(shareUrl);
+          setShowShare(false);
+        }}
+        className="mt-4 w-full py-2 bg-gray-100 rounded-lg"
+      >
+        Copy Link
+      </button>
+
+      <button
+        onClick={() => setShowShare(false)}
+        className="mt-2 w-full py-2 bg-gray-200 rounded-lg"
+      >
+        Close
+      </button>
+
+    </div>
+  </div>
+)}
       <div className="flex items-center justify-between px-4 py-3">
         {/* user info */}
         <LoginRequiredModal
@@ -328,7 +403,10 @@ export default function PostCard({
           </button>
 
           {/* share */}
-          <button className="p-2 rounded-lg text-gray-600 hover:bg-gray-100">
+          <button
+            onClick={handleShare}
+            className="p-2 rounded-lg text-gray-600 hover:bg-gray-100"
+          >
             <Share2 size={20} />
           </button>
         </div>

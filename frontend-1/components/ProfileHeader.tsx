@@ -7,7 +7,6 @@ import {
   Users,
   UserPlus,
   ChevronDown,
-  MessageCircle,
   Loader2,
 } from "lucide-react";
 import { FaUserPlus } from "react-icons/fa";
@@ -24,11 +23,15 @@ import { formatCount } from "@/lib/formatCount";
 interface ProfileHeaderProps {
   user: User;
   isOwnProfile: boolean;
+  isExpanded: boolean;
+  setIsExpanded: (val: boolean) => void;
 }
 
 export default function ProfileHeader({
   user,
   isOwnProfile,
+  isExpanded,
+  setIsExpanded
 }: ProfileHeaderProps) {
   const router = useRouter();
   const { loadUser, isLoading: contextLoading } = useUser();
@@ -183,7 +186,13 @@ useEffect(() => {
           </h1>
 
           {/* -------- MOBILE COLLAPSIBLE -------- */}
-          <details className="md:hidden mt-1 group">
+          <details
+            className="md:hidden mt-1 group"
+            open={isExpanded}
+            onToggle={(e) =>
+              setIsExpanded((e.target as HTMLDetailsElement).open)
+            }
+          >
             <summary className="list-none cursor-pointer text-sm text-gray-500 flex items-center justify-center gap-1 ml-2">
               <span>View more</span>
               <ChevronDown
@@ -199,25 +208,33 @@ useEffect(() => {
 
               <div className="flex flex-wrap justify-center gap-4 mt-2 text-sm">
                 <div>
-                  <span className="font-semibold">{formatCount(user.total_posts)}</span>{" "}
+                  <span className="font-semibold">
+                    {formatCount(user.total_posts)}
+                  </span>{" "}
                   Posts
                 </div>
 
                 <button className="flex items-center gap-2 hover:text-purple-600">
                   <Users size={16} />
-                  <span className="font-semibold">{formatCount(totalFriends)}</span>
+                  <span className="font-semibold">
+                    {formatCount(totalFriends)}
+                  </span>
                   Friends
                 </button>
 
                 <button className="flex items-center gap-2 hover:text-purple-600">
                   <UserPlus size={16} />
-                  <span className="font-semibold">{formatCount(totalFollowers)}</span>
+                  <span className="font-semibold">
+                    {formatCount(totalFollowers)}
+                  </span>
                   Followers
                 </button>
 
                 <button className="flex items-center gap-2 hover:text-purple-600">
                   <UserPlus size={16} />
-                  <span className="font-semibold">{formatCount(user?.total_following)}</span>
+                  <span className="font-semibold">
+                    {formatCount(user?.total_following)}
+                  </span>
                   Following
                 </button>
               </div>
@@ -296,24 +313,33 @@ useEffect(() => {
 
             <div className="flex flex-wrap gap-4 mt-2 text-sm">
               <div>
-                <span className="font-semibold">{formatCount(user?.total_posts)}</span> Posts
+                <span className="font-semibold">
+                  {formatCount(user?.total_posts)}
+                </span>{" "}
+                Posts
               </div>
 
               <button className="flex items-center gap-2 hover:text-purple-600">
                 <Users size={16} />
-                <span className="font-semibold">{formatCount(totalFriends)}</span>
+                <span className="font-semibold">
+                  {formatCount(totalFriends)}
+                </span>
                 Friends
               </button>
 
               <button className="flex items-center gap-2 hover:text-purple-600">
                 <UserPlus size={16} />
-                <span className="font-semibold">{formatCount(totalFollowers)}</span>
+                <span className="font-semibold">
+                  {formatCount(totalFollowers)}
+                </span>
                 Followers
               </button>
 
               <button className="flex items-center gap-2 hover:text-purple-600">
                 <UserPlus size={16} />
-                <span className="font-semibold">{formatCount(user?.total_following)}</span>
+                <span className="font-semibold">
+                  {formatCount(user?.total_following)}
+                </span>
                 Following
               </button>
             </div>
@@ -331,7 +357,7 @@ useEffect(() => {
             </button>
           ) : (
             <>
-              {isFriend? (
+              {isFriend ? (
                 <>
                   <button
                     onClick={handleUnfriend}
