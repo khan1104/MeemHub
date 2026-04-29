@@ -176,22 +176,15 @@ const shareLinks = {
 };
   const handleShare = async () => {
   const url = `https://www.meemhub.in/posts/${post.post_id}`;
-  const text = post.caption;
+  const text = `${post.caption}\n\n${url}`;
 
-  // ✅ Mobile → native share first
   if (navigator.share) {
-    try {
-      await navigator.share({
-        title: "MeemHub",
-        text,
-        url,
-      });
-      return;
-    } catch {}
+    await navigator.share({
+      text,
+    });
+  } else {
+    await navigator.clipboard.writeText(text);
   }
-
-  // ✅ Desktop → open options
-  setShowShare(true);
 };
   return (
     <div className="w-full bg-white border border-gray-200 rounded-xl mb-4 shadow-sm">
