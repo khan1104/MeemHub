@@ -149,7 +149,7 @@ export default function UploadModal({ open, onClose }: UploadModalProps) {
                   Upload Image or Video
                 </p>
                 <p className="text-sm text-gray-500">
-                  JPG, PNG, MP4 • Max 20MB
+                  JPG, PNG, MP4
                 </p>
               </div>
             )}
