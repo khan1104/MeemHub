@@ -195,16 +195,12 @@ A request can be:
 
 # 🚀 Local Development
 
-## Prerequisites without docker
+## Prerequisites
 
 Make sure you have:
 
-* Python 3.11+
-* Node.js
-* npm
-* MongoDB
-* Redis (avilable on wsl)
-
+* Docker
+* MongoDB locally or compass 
 ---
 
 ## Clone the Repository
@@ -222,42 +218,12 @@ cd meemhub
 ```bash
 cd backend
 ```
-
-Create a virtual environment:
-
-```bash
-python -m venv venv
-```
-
-Activate it on Windows:
-
-```bash
-venv\Scripts\activate
-```
-
-Activate it on Linux/macOS:
-
-```bash
-source venv/bin/activate
-```
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-Create your environment file:
-
-```text
-.env
-```
-
+Create .env file:
 Example configuration:
 
 ```env
-MONGO_URI=mongodb://localhost:27017/
-REDIS_HOST_URL=redis://localhost:6379/0
+MONGO_URI=mongodb:mongodb://host.docker.internal:27017
+REDIS_HOST_URL=redis://redis:6379
 DATABASE_NAME=
 JWT_SECRET_KEY=
 JWT_REFRESH_KEY=
@@ -267,14 +233,14 @@ SUPABASE_URL=
 SUPABASE_KEY=
 GOOGLE_CLIENT_ID=
 GOOGLE_SECRET_KEY=
-POSTS_BUCKET=users_posts
-PROFILE_PICS_BUCKET=profile_pics
+POSTS_BUCKET=usersPosts
+PROFILE_PICS_BUCKET=profilePics
 ```
 
-Run the API:
+Build and start the docker image:
 
 ```bash
-uvicorn app.main:app --reload
+docker compose up --build
 ```
 
 Backend will be available at:
