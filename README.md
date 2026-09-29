@@ -200,7 +200,7 @@ A request can be:
 Make sure you have:
 
 * Docker
-* MongoDB locally or compass 
+* MongoDB locally or Atlas
 ---
 
 ## Clone the Repository
