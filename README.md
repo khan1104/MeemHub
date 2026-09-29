@@ -364,18 +364,6 @@ The main goal of MeemHub was not just to build a meme-sharing application, but t
 
 B.Sc. Computer Science
 
-Backend-focused developer interested in:
-
-* Python
-* FastAPI
-* Node.js
-* REST APIs
-* MongoDB
-* Redis
-* Docker
-* AWS
-* AI-powered applications
-
 ### Links
 
 * 🌐 Portfolio: `https://portfolio-ten-theta-76.vercel.app`
