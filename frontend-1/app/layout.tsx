@@ -4,6 +4,7 @@ import "./globals.css";
 import { UserProvider } from "@/context/UserContext";
 import { FeedProvider } from "@/context/FeedContext";
 import { Toaster } from "sonner";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "MeemHub",
@@ -29,6 +30,7 @@ export default function RootLayout({
             </FeedProvider>
           </UserProvider>
         </GoogleOAuthProvider>
+        <Analytics />
       </body>
     </html>
   );
